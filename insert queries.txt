@@ -1,0 +1,51 @@
+--products main
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(1, 'Pizza','main',52);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(2, 'Rib-eye Steak','main',56);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(3, 'chicken curry','main',1000);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(4, 'Burger','main',20);
+
+--products Appetizers
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(4, 'Tomtato','appetizers',5);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(5, 'Potatoe','appetizers',10);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(6, 'chicken Wings','appetizers',15);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(7, 'Bread','appetizers',2);
+
+--products Drinks
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(8, 'Pepsi','drinks',8);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(9, 'cola','drinks',8);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(10, 'Mountain dew','drinks',8);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(11, 'Orange juice','drinks',15);
+
+--products Desert
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(12, 'Red velvet','desert',25);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(13, 'Molten cake','desert',20);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(14, 'Birthday cake','desert',100);
+
+INSERT INTO products (productID, productName,productType,productPrice)
+VALUES(15, 'Brwonies','desert',15);
