@@ -8,20 +8,31 @@ package model;
  *
  * @author himaa
  */
+
 public class person {
-    String username;
-    String password;
+    static String username;
+    static String password;
+    static int userID ;
+ 
+
+    public static int getUserID() {
+        return userID;
+    }
+
+    public static void setUserID(int userID) {
+       person.userID = userID;
+    }
 
     public person(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public String getUsername() {
+    public  static String getUsername() {
         return username;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
@@ -29,8 +40,8 @@ public class person {
         this.username = username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public static void setPassword(String password) {
+        person.password = password;
     }
 
 }

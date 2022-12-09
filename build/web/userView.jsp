@@ -12,8 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <<form action="reservationController" method="post">
-            <a href="reservationView.jsp" target="_self">Make reservation</a>
+        <p>welcome <%= model.person. getUsername()%></p>
+        <form action="reservationController" method="post">
+            <a href="reservationView.jsp" target="target">Make reservation</a>
             <a href="reservationHistory.jsp" target="target">View reservation</a>
             <a href="index.html" target="target">Logout</a>
         </form>

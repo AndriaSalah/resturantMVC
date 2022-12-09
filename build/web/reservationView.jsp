@@ -4,7 +4,11 @@
     Author     : andria
 --%>
 
+<%@page import="model.reservationModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+reservationModel re = new reservationModel();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +16,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Welcome please choose your meal course from below</h1>
+        <h3>Appetizers</h3>
+        <select name="appetizers" id = "appetizers">
+            <%
+              System.out.println("googgoo"+ re.getMain());
+            %>
+        </select>
     </body>
 </html>

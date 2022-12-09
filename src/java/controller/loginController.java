@@ -44,7 +44,8 @@ public class loginController extends HttpServlet {
         person p = new person(Username,password);
         DBconncection db = new DBconncection();
         
-        if(db.validate(p)){
+        if(db.validate(p) != 0){
+            p.setUserID(db.validate(p));
             RequestDispatcher req = request.getRequestDispatcher("userView.jsp");
             req.forward(request, response);
         }

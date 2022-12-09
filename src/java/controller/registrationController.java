@@ -42,7 +42,7 @@ public class registrationController extends HttpServlet {
         DBconncection db = new DBconncection();
         
         if (db.register(newUser)) {
-            RequestDispatcher req = request.getRequestDispatcher("index.html");
+            RequestDispatcher req = request.getRequestDispatcher("index.jsp");
             req.forward(request, response);
         } else {
             RequestDispatcher req = request.getRequestDispatcher("loginfailed.jsp");
