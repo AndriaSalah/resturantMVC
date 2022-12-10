@@ -4,12 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/reservationController.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/adminController.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/reservationModel.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/adminView.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/reservationView.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/userView.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/loginController.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/person.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/index.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/DBconncection.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/productModel.java</file>
         </group>
     </open-files>
 </project-private>

@@ -10,7 +10,7 @@
     </head>
     <body>
         <div style="width: 100%;height: 100%" class="mainContainer">
-            <form  class="Container" action="loginController" method="get">
+            <form  class="Container" action="loginController" method="post">
                 username: <input class="textfield" type="text" name="uname" ><br>
                 password: <input class="textfield" type="text" name="pwd" > <br>
                 <div class="buttons">

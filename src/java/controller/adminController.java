@@ -1,26 +1,18 @@
 package controller;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DBconncection;
-import model.person;
 
 /**
  *
  * @author himaa
  */
-@WebServlet(urlPatterns = {"/loginController"})
-public class loginController extends HttpServlet {
+public class adminController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +27,21 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getContextPath();
-
-        String Username = request.getParameter("uname");
-        String password = request.getParameter("pwd");
-
-        person p = new person(Username, password);
-        DBconncection db = new DBconncection();
-
-        if (db.validate(p) != 0) {
-            p.setUserID(db.validate(p));
-            RequestDispatcher req = request.getRequestDispatcher("userView.jsp");
+        
+        if (request.getParameter("Make reservation") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("reservationView.jsp");
             req.forward(request, response);
-        } 
-        else {
-            RequestDispatcher req = request.getRequestDispatcher("loginfailed.jsp");
+        }else if (request.getParameter("View reservation") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
+            req.forward(request, response);
+        }else if (request.getParameter("Add product") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
+            req.forward(request, response);
+        }else if (request.getParameter("DEL product") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
+            req.forward(request, response);
+        }else if (request.getParameter("Logout") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("index.html");
             req.forward(request, response);
         }
     }
@@ -91,5 +84,5 @@ public class loginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

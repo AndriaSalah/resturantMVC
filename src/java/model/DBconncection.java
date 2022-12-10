@@ -28,13 +28,13 @@ public class DBconncection {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
-            String sql = "select userID  from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
+            String sql = "select userID,userType   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
             ResultSet sql_result = null;
             System.out.println(sql);
 //            statement_handler.executeQuery(sql);
             sql_result = statement_handler.executeQuery(sql);
 
-            while (sql_result.next()) {
+           if (sql_result.next()) {
                 System.out.println(sql_result.getInt(1));
                 return sql_result.getInt(1);
             }
@@ -77,21 +77,6 @@ public class DBconncection {
         return false;
     }
 
-//    public boolean MakeReservation() {
-//        Connection db;
-//        try {
-//            db = DriverManager.getConnection(url, user, password);
-//            Statement statement_handler = db.createStatement();
-//            ResultSet sql_result = null;
-//            String sql = "INSERT INTO RESERVATION (productID, productName,productType,productPrice)\n" + "VALUES(1, 'Pizza','main',52);";
-//            System.out.println(sql);
-//            sql_result = statement_handler.executeQuery(sql);
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
-//    }
     public static ArrayList getProducts(String type) throws SQLException {
         Connection db;
         ArrayList<String> temp = new ArrayList<>();
@@ -148,5 +133,21 @@ public class DBconncection {
         }
         return false;
     }
-
+    
+    public void addProduct(){
+    //TODO CODE HERE
+    //for admin
+    }
+        public void deleteProduct(){
+    //TODO CODE HERE
+     //for admin
+    }
+        
+      public void searchReservation(int userID){
+    //TODO CODE HERE
+    }     
+      public void removeReservation(int userID){
+    //TODO CODE HERE
+    }     
+        
 }
