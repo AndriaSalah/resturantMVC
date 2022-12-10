@@ -6,11 +6,16 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DBconncection;
+import model.reservationModel;
 
 /**
  *
@@ -29,15 +34,22 @@ public class reservationController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.getContextPath();
-        
-        
+        String main = request.getParameter("main");
+        String appetizer = request.getParameter("appetizers");
+        String dessert = request.getParameter("dessert");
+        String drinks = request.getParameter("drinks");
+
+        System.out.println(main + " m " + appetizer + " a " + dessert + " des " + drinks + " dri ");
+        reservationModel rm = new reservationModel(main, appetizer, dessert, drinks);
+        DBconncection db = new DBconncection();
+        if (db.makeReservation(rm.getMainID(), rm.getAppetizerID(), rm.getDessertID(), rm.getDrinksID())) {
+
+            System.out.println("success");
+        }
     }
-                
-        
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -51,7 +63,11 @@ public class reservationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -65,7 +81,11 @@ public class reservationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -4,7 +4,6 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -36,20 +35,18 @@ public class loginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getContextPath();
-        
+
         String Username = request.getParameter("uname");
         String password = request.getParameter("pwd");
-        
-        
-        person p = new person(Username,password);
+
+        person p = new person(Username, password);
         DBconncection db = new DBconncection();
-        
-        if(db.validate(p) != 0){
+
+        if (db.validate(p) != 0) {
             p.setUserID(db.validate(p));
             RequestDispatcher req = request.getRequestDispatcher("userView.jsp");
             req.forward(request, response);
-        }
-        else{
+        } else {
             RequestDispatcher req = request.getRequestDispatcher("loginfailed.jsp");
             req.forward(request, response);
         }

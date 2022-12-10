@@ -4,61 +4,159 @@
  */
 package model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static model.DBconncection.password;
+import static model.DBconncection.url;
+import static model.DBconncection.user;
 
 /**
  *
  * @author andria
  */
 public class reservationModel {
-   static ArrayList<String> main = new ArrayList<>();
-   static ArrayList<String> appetizer = new ArrayList<>();
-   static ArrayList<String> drinks = new ArrayList<>();
-   static ArrayList<String> dessert = new ArrayList<>();
 
-    public reservationModel() throws SQLException {
-         DBconncection db = new DBconncection();
-         ResultSet set = db.getProducts("main");
-         for (int i = 0; i < main.size(); i++) {
-          main.add(set.getString("productName"));
-            
+    static int mainID, appetizerID, dessertID, drinksID, orderID, reservationID, tableNumber, totalPrice = 0;
+    static String reservationDate;
+    static Connection db;
+    static String sql;
+    static ResultSet sql_result;
+
+    public reservationModel(String main, String appetizer, String dessert, String drinks) throws SQLException {
+        getProductIDs(main, appetizer, dessert, drinks);
+        startReservation();
+        startOrder();
+    }
+
+    public static void getProductIDs(String main, String appetizers, String dessert, String drinks) {
+        try {
+            db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            ResultSet sql_result = null;
+
+            sql = "select productid from products where productname = '" + main + "'";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                mainID = sql_result.getInt("productId");
+            }
+
+            sql = "select productid from products where productname = '" + appetizers + "'";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                appetizerID = sql_result.getInt("productId");
+            }
+            sql = "select productid from products where productname = '" + dessert + "'";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                dessertID = sql_result.getInt("productId");
+            }
+
+            sql = "select productid from products where productname = '" + drinks + "'";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                drinksID = sql_result.getInt("productId");
+            }
+            sql_result.close();
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
-  
-   
-    public static ArrayList<String> getMain() {
-        return main;
+    public void startReservation() throws SQLException {
+
+        db = DriverManager.getConnection(url, user, password);
+        Statement statement_handler = db.createStatement();
+        sql = "select max(reservationID) from reservation";
+        System.out.println(sql);
+        sql_result = statement_handler.executeQuery(sql);
+        if (sql_result.next()) {
+            reservationID = sql_result.getInt(1) + 1;
+        } 
+
+        sql = "select max(tableNumber) from reservation";
+        System.out.println(sql);
+        sql_result = statement_handler.executeQuery(sql);
+        if (sql_result.next()) {
+            tableNumber = sql_result.getInt(1) + 1;
+        } 
+
+        reservationDate = java.time.LocalDate.now().toString();
+        sql_result.close();
+        db.close();
     }
 
-    public static void setMain(ArrayList<String> main) {
-        reservationModel.main = main;
+    public void startOrder() {
+
+        try {
+            db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            sql = "select max(orderID) from products_orders";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                orderID = sql_result.getInt(1) + 1;
+            } 
+
+            sql = "select sum(productPrice) from products where productID =" + mainID + " or productID =" + appetizerID + " or productID =" + dessertID + "  or productID =" + drinksID ;
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if(sql_result.next()){
+            totalPrice = sql_result.getInt(1);
+            }
+            
+
+            sql_result.close();
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
-    public static ArrayList<String> getAppetizer() {
-        return appetizer;
+    public static int getMainID() {
+        return mainID;
     }
 
-    public static void setAppetizer(ArrayList<String> appetizer) {
-        reservationModel.appetizer = appetizer;
+    public static int getAppetizerID() {
+        return appetizerID;
     }
 
-    public static ArrayList<String> getDrinks() {
-        return drinks;
+    public static int getDessertID() {
+        return dessertID;
     }
 
-    public static void setDrinks(ArrayList<String> drinks) {
-        reservationModel.drinks = drinks;
+    public static int getDrinksID() {
+        return drinksID;
     }
 
-    public static ArrayList<String> getDessert() {
-        return dessert;
+    public static int getOrderID() {
+        return orderID;
     }
 
-    public static void setDessert(ArrayList<String> dessert) {
-        reservationModel.dessert = dessert;
+    public static int getReservationID() {
+        return reservationID;
+    }
+
+    public static int getTableNumber() {
+        return tableNumber;
+    }
+
+    public static int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public static String getReservationDate() {
+        return reservationDate;
     }
 }
-

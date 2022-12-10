@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/reservationController.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/reservationModel.java</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/reservationView.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/userView.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/loginController.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/person.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/index.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/DBconncection.java</file>
         </group>
     </open-files>
