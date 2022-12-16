@@ -41,13 +41,15 @@ public class loginController extends HttpServlet {
 
         person p = new person(Username, password);
         DBconncection db = new DBconncection();
-
-        if (db.validate(p) != 0) {
+        if (db.validate(p) == 322) {
+            p.setUserID(db.validate(p));
+            RequestDispatcher req = request.getRequestDispatcher("adminView.jsp");
+            req.forward(request, response);
+        } else if (db.validate(p) != 0) {
             p.setUserID(db.validate(p));
             RequestDispatcher req = request.getRequestDispatcher("userView.jsp");
             req.forward(request, response);
-        } 
-        else {
+        } else {
             RequestDispatcher req = request.getRequestDispatcher("loginfailed.jsp");
             req.forward(request, response);
         }

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,8 +47,12 @@ public class reservationController extends HttpServlet {
         reservationModel rm = new reservationModel(main, appetizer, dessert, drinks);
         DBconncection db = new DBconncection();
         if (db.makeReservation(rm.getMainID(), rm.getAppetizerID(), rm.getDessertID(), rm.getDrinksID())) {
+            RequestDispatcher req = request.getRequestDispatcher("Extras/reservationSuccess.jsp");
+            req.forward(request, response);
 
-            System.out.println("success");
+        } else {
+            RequestDispatcher req = request.getRequestDispatcher("Extras/reservationFailed.jsp");
+            req.forward(request, response);
         }
     }
 

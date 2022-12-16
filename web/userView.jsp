@@ -12,11 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <p>welcome <%= model.person. getUsername()%></p>
+        <p>welcome <b> <%= model.person. getUsername()%></b></p>
         <form action="reservationController" method="post">
-            <a href="reservationView.jsp" target="target">Make reservation</a>
-            <a href="reservationHistory.jsp" target="target">View reservation</a>
-            <a href="index.html" target="target">Logout</a>
+            <a href="reservationView.jsp" >Make reservation</a>
+            <a href="reservationHistory.jsp">View reservation</a>
+            <a href="index.html" >Logout</a>
         </form>
     </body>
 </html>

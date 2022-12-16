@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static model.DBconncection.password;
@@ -82,14 +83,14 @@ public class reservationModel {
         sql_result = statement_handler.executeQuery(sql);
         if (sql_result.next()) {
             reservationID = sql_result.getInt(1) + 1;
-        } 
+        }
 
         sql = "select max(tableNumber) from reservation";
         System.out.println(sql);
         sql_result = statement_handler.executeQuery(sql);
         if (sql_result.next()) {
             tableNumber = sql_result.getInt(1) + 1;
-        } 
+        }
 
         reservationDate = java.time.LocalDate.now().toString();
         sql_result.close();
@@ -106,15 +107,14 @@ public class reservationModel {
             sql_result = statement_handler.executeQuery(sql);
             if (sql_result.next()) {
                 orderID = sql_result.getInt(1) + 1;
-            } 
+            }
 
-            sql = "select sum(productPrice) from products where productID =" + mainID + " or productID =" + appetizerID + " or productID =" + dessertID + "  or productID =" + drinksID ;
+            sql = "select sum(productPrice) from products where productID =" + mainID + " or productID =" + appetizerID + " or productID =" + dessertID + "  or productID =" + drinksID;
             System.out.println(sql);
             sql_result = statement_handler.executeQuery(sql);
-            if(sql_result.next()){
-            totalPrice = sql_result.getInt(1);
+            if (sql_result.next()) {
+                totalPrice = sql_result.getInt(1);
             }
-            
 
             sql_result.close();
             db.close();
@@ -122,6 +122,34 @@ public class reservationModel {
             Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public static ArrayList<String> getProductNames() {
+        ArrayList<String> temp = new ArrayList<>();
+        try {
+            db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+//            sql = "SELECT RESERVATION.*, ORDERS.orderTotalPrice AS totalPrice, PRODUCTS_ORDERS.*, PRODUCTNAME as products  FROM  RESERVATION "
+//                    + "INNER JOIN ORDERS ON ORDERS.RESERVATIONID = RESERVATION.RESERVATIONID "
+//                    + "INNER JOIN PRODUCTS_ORDERS ON PRODUCTS_ORDERS.ORDERID = ORDERS.ORDERID "
+//                    + "inner join PRODUCTS ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID "
+//                    + "WHERE USERID = " + person.getUserID();
+            sql = "select   PRODUCTNAME , orders.orderid , reservation.RESERVATIONID FROM PRODUCTS "
+                    + "INNER JOIN PRODUCTS_orders ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID "
+                    + "inner join orders on products_orders.orderID = orders.orderID "
+                    + "inner join reservation on reservation.RESERVATIONID = orders.RESERVATIONID where reservation.userID = " + person.getUserID() + " and reservation.reservationid = " + reservationID;
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+
+            while (sql_result.next()) {
+                temp.add(sql_result.getString(1));
+            }
+            sql_result.close();
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(reservationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return temp;
     }
 
     public static int getMainID() {

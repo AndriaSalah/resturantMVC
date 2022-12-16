@@ -1,7 +1,7 @@
 <%-- 
-    Document   : loginfailed
-    Created on : Nov 21, 2022, 8:44:57 PM
-    Author     : himaa
+    Document   : reservationFailed
+    Created on : Dec 16, 2022, 9:07:23 PM
+    Author     : andria
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>login failed</h1>
+        <h1>Hello World!</h1>
     </body>
 </html>

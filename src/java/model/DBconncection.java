@@ -28,13 +28,16 @@ public class DBconncection {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
-            String sql = "select userID,userType   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
+            String sql = "select userID,userType as type   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
             ResultSet sql_result = null;
             System.out.println(sql);
 //            statement_handler.executeQuery(sql);
             sql_result = statement_handler.executeQuery(sql);
-
+            
            if (sql_result.next()) {
+               if(sql_result.getString("type").equals("admin")){
+               return 322;
+               }
                 System.out.println(sql_result.getInt(1));
                 return sql_result.getInt(1);
             }
@@ -60,9 +63,14 @@ public class DBconncection {
             sql_result = statement_handler.executeQuery(sql);
 
             if (sql_result.next()) {
+                if(sql_result.getInt(1)<321||sql_result.getInt(1)>322){
                 id = sql_result.getInt(1);
                 System.out.println(id);
                 id++;
+                }
+                else {
+                    id=323;
+                }
             }
             sql_result = null;
             sql = "INSERT INTO person (userID, userName,userPass,userType) VALUES(" + id + ",'" + p.getUsername() + "','" + p.getPassword() + "','user')";
@@ -134,6 +142,9 @@ public class DBconncection {
         return false;
     }
     
+    public void viewReservation(){
+    //TODO CODE HERE
+    }
     public void addProduct(){
     //TODO CODE HERE
     //for admin
