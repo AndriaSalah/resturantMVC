@@ -18,9 +18,9 @@ public class productModel {
     static ArrayList<String> appetizer = new ArrayList<>();
     static ArrayList<String> drinks = new ArrayList<>();
     static ArrayList<String> dessert = new ArrayList<>();
-
+    DBconncection db = new DBconncection();
     public productModel() throws SQLException {
-        DBconncection db = new DBconncection();
+        
         ArrayList<String> set;
         set = db.getProducts("appetizer");
         appetizer = set;
@@ -35,7 +35,11 @@ public class productModel {
     public static ArrayList<String> getMain() {
         return main;
     }
-
+    public static String getPrice(String item){
+    
+        
+        return "";
+    }
     public static String getTypeAtIndex(String type, int index) {
         switch (type) {
             case "main":

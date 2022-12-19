@@ -23,7 +23,7 @@
             <%for (int idx = 0; idx < reservationModel.getProductNames().size(); idx++) {%>
             <p><%=reservationModel.getProductNames().get(idx)%></p>
             <%}%>
-            <a href="../userView.jsp">click here to go back to the homepage</a>
+            <a href="/index.jsp/userView.jsp">click here to go back to the homepage</a>
         </div>
     </body>
 </html>

@@ -14,17 +14,19 @@ productModel product = new productModel();
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="styles/Reservation.css" type="text/css"/>
     </head>
     <body>
         <form action="reservationController" method="post">
         <h1>Welcome please choose your meal course from below</h1>
         <h3>Appetizers</h3>
         <select name="appetizers" id = "appetizers">
-            <%for (int i = 0; i < product.getMain().size() ; i++) {%>
+            <%for (int i = 0; i < product.getAppetizer().size() ; i++) {%>
             <%System.out.println(product.getTypeAtIndex("appetizer",i));%>
             <option> <%= product.getTypeAtIndex("appetizer",i) %> </option> 
               <%  }  %>
         </select>
+        
         <h3>main</h3>
         <select name="main" id = "main">
             <%for (int i = 0; i < product.getMain().size() ; i++) {%>
@@ -34,14 +36,14 @@ productModel product = new productModel();
         </select>
         <h3>dessert</h3>
         <select name="dessert" id = "dessert">
-            <%for (int i = 0; i < product.getMain().size() ; i++) {%>
+            <%for (int i = 0; i < product.getDessert().size() ; i++) {%>
             <%System.out.println(product.getTypeAtIndex("dessert",i));%>
             <option> <%= product.getTypeAtIndex("dessert",i) %> </option> 
               <%  }  %>
         </select>
         <h3>drinks</h3>
         <select name="drinks" id = "drinks">
-            <%for (int i = 0; i < product.getMain().size() ; i++) {%>
+            <%for (int i = 0; i < product.getDrinks().size() ; i++) {%>
             <%System.out.println(product.getTypeAtIndex("drinks",i));%>
             <option> <%= product.getTypeAtIndex("drinks",i) %> </option> 
               <%  }  %>

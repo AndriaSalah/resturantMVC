@@ -1,17 +1,23 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author himaa
+ * @author andria
  */
+@WebServlet(name = "adminController", urlPatterns = {"/adminController"})
 public class adminController extends HttpServlet {
 
     /**
@@ -27,7 +33,6 @@ public class adminController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getContextPath();
-        
         if (request.getParameter("Make reservation") != null) {
             RequestDispatcher req = request.getRequestDispatcher("reservationView.jsp");
             req.forward(request, response);
@@ -35,13 +40,13 @@ public class adminController extends HttpServlet {
             RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
             req.forward(request, response);
         }else if (request.getParameter("Add product") != null) {
-            RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
+            RequestDispatcher req = request.getRequestDispatcher("Extras/addProduct.jsp");
             req.forward(request, response);
         }else if (request.getParameter("DEL product") != null) {
-            RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
+            RequestDispatcher req = request.getRequestDispatcher("Extras/removeProduct.jsp");
             req.forward(request, response);
         }else if (request.getParameter("Logout") != null) {
-            RequestDispatcher req = request.getRequestDispatcher("index.html");
+            RequestDispatcher req = request.getRequestDispatcher("index.jsp");
             req.forward(request, response);
         }
     }
@@ -84,5 +89,5 @@ public class adminController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

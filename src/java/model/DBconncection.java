@@ -33,11 +33,11 @@ public class DBconncection {
             System.out.println(sql);
 //            statement_handler.executeQuery(sql);
             sql_result = statement_handler.executeQuery(sql);
-            
-           if (sql_result.next()) {
-               if(sql_result.getString("type").equals("admin")){
-               return 322;
-               }
+
+            if (sql_result.next()) {
+                if (sql_result.getString("type").equals("admin")) {
+                    return 322;
+                }
                 System.out.println(sql_result.getInt(1));
                 return sql_result.getInt(1);
             }
@@ -63,26 +63,28 @@ public class DBconncection {
             sql_result = statement_handler.executeQuery(sql);
 
             if (sql_result.next()) {
-                if(sql_result.getInt(1)<321||sql_result.getInt(1)>322){
-                id = sql_result.getInt(1);
-                System.out.println(id);
-                id++;
-                }
-                else {
-                    id=323;
+                if (sql_result.getInt(1) < 321 || sql_result.getInt(1) > 322) {
+                    id = sql_result.getInt(1);
+                    System.out.println(id);
+                    id++;
+                } else {
+                    id = 323;
                 }
             }
             sql_result = null;
             sql = "INSERT INTO person (userID, userName,userPass,userType) VALUES(" + id + ",'" + p.getUsername() + "','" + p.getPassword() + "','user')";
             System.out.println(sql);
             statement_handler.executeUpdate(sql);
-            return true;
+            sql_result.close();
+            db.close();
 
         } catch (SQLException ex) {
 
             Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     public static ArrayList getProducts(String type) throws SQLException {
@@ -135,30 +137,85 @@ public class DBconncection {
             sql = "insert into products_orders values(" + reservationModel.orderID + "," + drinksID + ")";
             System.out.println(sql);
             statement_handler.executeUpdate(sql);
-            return true;
+
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public String getPrice(String item) {
+        try {
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            ResultSet sql_result = null;
+            String sql = "selec productPrice from products where productName ='" + item + "'";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+
+            if (sql_result.next()) {
+
+                return sql_result.getString(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
     }
-    
-    public void viewReservation(){
-    //TODO CODE HERE
+
+    public void viewReservation() {
+        //TODO CODE HERE
     }
-    public void addProduct(){
-    //TODO CODE HERE
-    //for admin
+
+    public boolean addProduct(String dishName, String dishType, int price) {
+        String sql;
+        int id = 0;
+        try {
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            ResultSet sql_result = null;
+            sql = "select max(productID) from products";
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                id = sql_result.getInt(1) + 1;
+            }
+            sql = "insert into products values (" + id + ",'" + dishName + "'," + price + ",'" + dishType + "')";
+            System.out.println(sql);
+            statement_handler.executeUpdate(sql);
+            sql_result.close();
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
     }
-        public void deleteProduct(){
-    //TODO CODE HERE
-     //for admin
+
+    public boolean deleteProduct(int id, String itemName) {
+        try {
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            String sql = "delete from products where productID = " + id + " and productName = '" + itemName + "'";
+            System.out.println(sql);
+            statement_handler.executeUpdate(sql);
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+        return true;
     }
-        
-      public void searchReservation(int userID){
-    //TODO CODE HERE
-    }     
-      public void removeReservation(int userID){
-    //TODO CODE HERE
-    }     
-        
+
+    public void searchReservation(int userID) {
+        //TODO CODE HERE
+    }
+
+    public void removeReservation(int userID) {
+        //TODO CODE HERE
+    }
+
 }
