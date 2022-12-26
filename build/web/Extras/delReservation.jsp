@@ -4,14 +4,15 @@
     Author     : andria
 --%>
 
+<%@page import="model.person"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.reservationModel"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-   
+
 <html>
-        <style>
+    <style>
 
 
         .mainContainer {
@@ -79,7 +80,9 @@
             <p>Dessert : <%=reservationModel.getResProducts("dessert")%></p>
             <p>Drinks : <%=reservationModel.getResProducts("drink")%></p>
             <p> reservation is deleted successfully </p>
+            <%if (person.getType().equals("user")) {%>
             <a href="/index.jsp/userView.jsp">click here to go back to the homepage</a>
+            <% } else if (person.getType().equals("admin")) {%><a href="/index.jsp/adminView.jsp">click here to go back to the homepage</a><%}%>
         </div>
     </body>
 </html>

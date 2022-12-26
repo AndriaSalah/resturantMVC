@@ -79,9 +79,9 @@
             <p>Main : <%=reservationModel.getResProducts("main")%></p>
             <p>Dessert : <%=reservationModel.getResProducts("dessert")%></p>
             <p>Drinks : <%=reservationModel.getResProducts("drink")%></p>
-            <%if (person.getUserID()!=322){%>
+                <%if (person.getType().equals("user")){%>
             <a href="/index.jsp/userView.jsp">click here to go back to the homepage</a>
-           <% } else {%><a href="/index.jsp/adminView.jsp">click here to go back to the homepage</a><%}%>
+           <% } else if(person.getType().equals("admin")) {%><a href="/index.jsp/adminView.jsp">click here to go back to the homepage</a><%}%>
         </div>
     </body>
 </html>

@@ -13,7 +13,15 @@ public class person {
     static String username;
     static String password;
     static int userID ;
- 
+ static String type;
+
+    public static String getType() {
+        return type;
+    }
+
+    public static void setType(String type) {
+        person.type = type;
+    }
 
     public static int getUserID() {
         return userID;

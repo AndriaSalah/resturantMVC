@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public interface DBconnectionDAO {
 
-    public int validate(person p);
+    public String validate(person p);
 
     public boolean register(person p);
 

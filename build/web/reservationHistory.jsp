@@ -96,7 +96,7 @@
         <form class="mainContainer" action="reservationController" method="get">
             <h2>please enter the reservation ID that you want to check</h2>
             <input class= "textfield" type="text" name="resID" >
-            <input class="button" type="submit" name="delete" value="view">
+            <input class="button" type="submit" name="view" value="view">
         </form>
     </body>
 </html>

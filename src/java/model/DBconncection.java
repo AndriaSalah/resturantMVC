@@ -37,11 +37,11 @@ public class DBconncection implements DBconnectionDAO {
     }
 
     @Override
-    public int validate(person p) {
+    public String validate(person p) {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
-            String sql = "select userID,userType as type   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
+            String sql = "select userType as type   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
             ResultSet sql_result = null;
             System.out.println(sql);
 //            statement_handler.executeQuery(sql);
@@ -49,10 +49,12 @@ public class DBconncection implements DBconnectionDAO {
 
             if (sql_result.next()) {
                 if (sql_result.getString("type").equals("admin")) {
-                    return 322;
+                    return "admin";
                 }
-                System.out.println(sql_result.getInt(1));
-                return sql_result.getInt(1);
+                else {
+                System.out.println(sql_result.getString(1));
+                return "user";
+                }
             }
 
             sql_result.close();
@@ -62,6 +64,23 @@ public class DBconncection implements DBconnectionDAO {
             Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return null;
+    }
+
+    public int getIDs(person p) {
+        try {
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            String sql = "select userID   from person where userName ='" + p.getUsername() + "'and userPass ='" + p.getPassword() + "'";
+            ResultSet sql_result = null;
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if(sql_result.next()){
+             return sql_result.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return 0;
     }
 
@@ -77,12 +96,12 @@ public class DBconncection implements DBconnectionDAO {
             sql_result = statement_handler.executeQuery(sql);
 
             if (sql_result.next()) {
-                if (sql_result.getInt(1) < 321 || sql_result.getInt(1) > 322) {
+                if (sql_result.getInt(1) < 31 || sql_result.getInt(1) > 32) {
                     id = sql_result.getInt(1);
                     System.out.println(id);
                     id++;
                 } else {
-                    id = 323;
+                    id = 32;
                 }
             }
             sql_result = null;
@@ -196,15 +215,17 @@ public class DBconncection implements DBconnectionDAO {
             if (sql_result.next()) {
                 reservationData.add(sql_result.getString(1));
                 reservationData.add(sql_result.getString(2));
+            } else {
+                return null;
             }
-            else return null;
             sql = "select orderID from orders where reservationID = +" + reservID;
             System.out.println(sql);
             sql_result = statement_handler.executeQuery(sql);
             if (sql_result.next()) {
                 reservationData.add(sql_result.getString(1));
+            } else {
+                return null;
             }
-             else return null;
             sql = "select   PRODUCTNAME , orders.orderid , reservation.RESERVATIONID FROM PRODUCTS \n"
                     + "INNER JOIN PRODUCTS_orders ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID \n"
                     + "inner join orders on products_orders.orderID = orders.orderID \n"
@@ -277,13 +298,13 @@ public class DBconncection implements DBconnectionDAO {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
-             sql = "delete from products_orders where products_orders.orderid = " + reservationModel.getResOrderID();
+            sql = "delete from products_orders where products_orders.orderid = " + reservationModel.getResOrderID();
             System.out.println(sql);
             statement_handler.executeUpdate(sql);
-             sql = "delete from orders where orders.orderid = " + reservationModel.getResOrderID();
+            sql = "delete from orders where orders.orderid = " + reservationModel.getResOrderID();
             System.out.println(sql);
             statement_handler.executeUpdate(sql);
-             sql = "delete from reservation where reservation.reservationid = " + reservID;
+            sql = "delete from reservation where reservation.reservationid = " + reservID;
             System.out.println(sql);
             statement_handler.executeUpdate(sql);
             db.close();
