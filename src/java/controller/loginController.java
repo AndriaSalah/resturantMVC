@@ -40,7 +40,7 @@ public class loginController extends HttpServlet {
         String password = request.getParameter("pwd");
 
         person p = new person(Username, password);
-        DBconncection db = new DBconncection();
+        DBconncection db = DBconncection.getInstance();
         if (db.validate(p) == 322) {
             p.setUserID(db.validate(p));
             RequestDispatcher req = request.getRequestDispatcher("adminView.jsp");

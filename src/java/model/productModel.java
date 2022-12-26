@@ -7,29 +7,22 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author andria
  */
-public class productModel {
+public class productModel implements productModelDAO {
 
     static ArrayList<String> main = new ArrayList<>();
     static ArrayList<String> appetizer = new ArrayList<>();
     static ArrayList<String> drinks = new ArrayList<>();
     static ArrayList<String> dessert = new ArrayList<>();
-    DBconncection db = new DBconncection();
-    public productModel() throws SQLException {
-        
-        ArrayList<String> set;
-        set = db.getProducts("appetizer");
-        appetizer = set;
-        set = db.getProducts("main");
-        main = set;
-        set = db.getProducts("drinks");
-        drinks = set;
-        set = db.getProducts("dessert");
-        dessert = set;
+    DBconncection db = DBconncection.getInstance();
+    public productModel()  {
+        initProducts();
     }
 
     public static ArrayList<String> getMain() {
@@ -40,7 +33,24 @@ public class productModel {
         
         return "";
     }
-    public static String getTypeAtIndex(String type, int index) {
+    @Override
+    public void initProducts(){
+        try {
+            ArrayList<String> set;
+            set = db.getProducts("appetizer");
+            appetizer = set;
+            set = db.getProducts("main");
+            main = set;
+            set = db.getProducts("drinks");
+            drinks = set;
+            set = db.getProducts("dessert");
+            dessert = set;
+        } catch (SQLException ex) {
+            Logger.getLogger(productModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+      @Override
+    public String getTypeAtIndex(String type, int index) {
         switch (type) {
             case "main":
                 return main.get(index);

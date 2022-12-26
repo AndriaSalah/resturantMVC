@@ -39,8 +39,12 @@ public class adminController extends HttpServlet {
         }else if (request.getParameter("View reservation") != null) {
             RequestDispatcher req = request.getRequestDispatcher("reservationHistory.jsp");
             req.forward(request, response);
+        }else if (request.getParameter("Delete reservation") != null) {
+            RequestDispatcher req = request.getRequestDispatcher("reservationDelete.jsp");
+            req.forward(request, response);
         }else if (request.getParameter("Add product") != null) {
             RequestDispatcher req = request.getRequestDispatcher("Extras/addProduct.jsp");
+          
             req.forward(request, response);
         }else if (request.getParameter("DEL product") != null) {
             RequestDispatcher req = request.getRequestDispatcher("Extras/removeProduct.jsp");

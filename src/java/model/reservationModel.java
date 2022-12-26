@@ -20,10 +20,12 @@ import static model.DBconncection.user;
  *
  * @author andria
  */
-public class reservationModel {
+public class reservationModel implements reservationModelDAO {
 
+    static ArrayList<String> reservationData = new ArrayList<>();
     static int mainID, appetizerID, dessertID, drinksID, orderID, reservationID, tableNumber, totalPrice = 0;
     static String reservationDate;
+
     static Connection db;
     static String sql;
     static ResultSet sql_result;
@@ -34,7 +36,8 @@ public class reservationModel {
         startOrder();
     }
 
-    public static void getProductIDs(String main, String appetizers, String dessert, String drinks) {
+    @Override
+    public void getProductIDs(String main, String appetizers, String dessert, String drinks) {
         try {
             db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
@@ -74,6 +77,7 @@ public class reservationModel {
 
     }
 
+    @Override
     public void startReservation() throws SQLException {
 
         db = DriverManager.getConnection(url, user, password);
@@ -97,6 +101,7 @@ public class reservationModel {
         db.close();
     }
 
+    @Override
     public void startOrder() {
 
         try {
@@ -129,11 +134,6 @@ public class reservationModel {
         try {
             db = DriverManager.getConnection(url, user, password);
             Statement statement_handler = db.createStatement();
-//            sql = "SELECT RESERVATION.*, ORDERS.orderTotalPrice AS totalPrice, PRODUCTS_ORDERS.*, PRODUCTNAME as products  FROM  RESERVATION "
-//                    + "INNER JOIN ORDERS ON ORDERS.RESERVATIONID = RESERVATION.RESERVATIONID "
-//                    + "INNER JOIN PRODUCTS_ORDERS ON PRODUCTS_ORDERS.ORDERID = ORDERS.ORDERID "
-//                    + "inner join PRODUCTS ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID "
-//                    + "WHERE USERID = " + person.getUserID();
             sql = "select   PRODUCTNAME , orders.orderid , reservation.RESERVATIONID FROM PRODUCTS "
                     + "INNER JOIN PRODUCTS_orders ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID "
                     + "inner join orders on products_orders.orderID = orders.orderID "
@@ -150,6 +150,41 @@ public class reservationModel {
             Logger.getLogger(reservationModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return temp;
+    }
+
+    public static boolean getReservationData(int reservID) {
+        DBconncection db = DBconncection.getInstance();
+        if(db.viewReservation(reservID) != null){
+            reservationData = db.viewReservation(reservID);
+            return true;
+        }
+        return false;
+    }
+
+    public static String getResTableNumber() {
+        return reservationData.get(0);
+    }
+
+    public static String getResDate() {
+        return reservationData.get(1);
+    }
+
+    public static String getResOrderID() {
+        return reservationData.get(2);
+    }
+
+    public static String getResProducts(String type) {
+        switch (type) {
+            case "appetizer":
+                return reservationData.get(3);
+            case "main":
+                return reservationData.get(4);
+            case "dessert":
+                return reservationData.get(5);
+            case "drink":
+                return reservationData.get(6);
+        }
+        return null;
     }
 
     public static int getMainID() {

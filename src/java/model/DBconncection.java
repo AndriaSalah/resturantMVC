@@ -18,12 +18,25 @@ import static model.reservationModel.orderID;
  *
  * @author himaa
  */
-public class DBconncection {
+public class DBconncection implements DBconnectionDAO {
+
+    private static DBconncection db;
 
     final static String url = "jdbc:derby://localhost:1527/resturants";
     final static String user = "resturant";
     final static String password = "12345";
 
+    private DBconncection() {
+    }
+
+    public static DBconncection getInstance() {
+        if (db == null) {
+            db = new DBconncection();
+        }
+        return db;
+    }
+
+    @Override
     public int validate(person p) {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
@@ -52,6 +65,7 @@ public class DBconncection {
         return 0;
     }
 
+    @Override
     public boolean register(person p) {
         int id = 0;
         try {
@@ -87,7 +101,8 @@ public class DBconncection {
         return true;
     }
 
-    public static ArrayList getProducts(String type) throws SQLException {
+    @Override
+    public ArrayList getProducts(String type) throws SQLException {
         Connection db;
         ArrayList<String> temp = new ArrayList<>();
         try {
@@ -107,6 +122,7 @@ public class DBconncection {
         return temp;
     }
 
+    @Override
     public boolean makeReservation(int mainID, int appetizerID, int dessertID, int drinksID) {
         try {
             Connection db;
@@ -146,6 +162,7 @@ public class DBconncection {
         return true;
     }
 
+    @Override
     public String getPrice(String item) {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
@@ -165,10 +182,46 @@ public class DBconncection {
         return null;
     }
 
-    public void viewReservation() {
-        //TODO CODE HERE
+    @Override
+    public ArrayList<String> viewReservation(int reservID) {
+        ArrayList<String> reservationData = new ArrayList<>();
+        try {
+            String sql;
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+            ResultSet sql_result = null;
+            sql = "select tablenumber, reservationDate from reservation where reservationID = +" + reservID + "and userID = " + person.getUserID();
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                reservationData.add(sql_result.getString(1));
+                reservationData.add(sql_result.getString(2));
+            }
+            else return null;
+            sql = "select orderID from orders where reservationID = +" + reservID;
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            if (sql_result.next()) {
+                reservationData.add(sql_result.getString(1));
+            }
+             else return null;
+            sql = "select   PRODUCTNAME , orders.orderid , reservation.RESERVATIONID FROM PRODUCTS \n"
+                    + "INNER JOIN PRODUCTS_orders ON PRODUCTS_ORDERS.PRODUCTID = PRODUCTS.PRODUCTID \n"
+                    + "inner join orders on products_orders.orderID = orders.orderID \n"
+                    + "inner join reservation on reservation.RESERVATIONID = orders.RESERVATIONID where reservation.userID = " + person.getUserID() + " and reservation.reservationid =" + reservID;
+            System.out.println(sql);
+            sql_result = statement_handler.executeQuery(sql);
+            while (sql_result.next()) {
+                reservationData.add(sql_result.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return reservationData;
     }
 
+    @Override
     public boolean addProduct(String dishName, String dishType, int price) {
         String sql;
         int id = 0;
@@ -194,6 +247,7 @@ public class DBconncection {
         return true;
     }
 
+    @Override
     public boolean deleteProduct(int id, String itemName) {
         try {
             Connection db = DriverManager.getConnection(url, user, password);
@@ -214,8 +268,28 @@ public class DBconncection {
         //TODO CODE HERE
     }
 
-    public void removeReservation(int userID) {
-        //TODO CODE HERE
+    @Override
+    public void removeReservation(int reservID) {
+        //delete from products_orders where products_orders.orderid=1
+        //delete from orders where orders.orderid = 1;
+        //delete from reservation where reservation.reservationid = 1;
+        String sql;
+        try {
+            Connection db = DriverManager.getConnection(url, user, password);
+            Statement statement_handler = db.createStatement();
+             sql = "delete from products_orders where products_orders.orderid = " + reservationModel.getResOrderID();
+            System.out.println(sql);
+            statement_handler.executeUpdate(sql);
+             sql = "delete from orders where orders.orderid = " + reservationModel.getResOrderID();
+            System.out.println(sql);
+            statement_handler.executeUpdate(sql);
+             sql = "delete from reservation where reservation.reservationid = " + reservID;
+            System.out.println(sql);
+            statement_handler.executeUpdate(sql);
+            db.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconncection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

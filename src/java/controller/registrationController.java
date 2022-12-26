@@ -39,7 +39,7 @@ public class registrationController extends HttpServlet {
         String password = request.getParameter("pwd");
         
         person newUser = new person(usernName, password);
-        DBconncection db = new DBconncection();
+       DBconncection db = DBconncection.getInstance();
         
         if (db.register(newUser)) {
             RequestDispatcher req = request.getRequestDispatcher("index.jsp");

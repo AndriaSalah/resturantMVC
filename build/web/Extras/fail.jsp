@@ -1,22 +1,20 @@
 <%-- 
-    Document   : reservationSuccess
-    Created on : Dec 16, 2022, 9:04:36 PM
+    Document   : fail
+    Created on : Dec 26, 2022, 3:24:53 AM
     Author     : andria
 --%>
 
-<%@page import="model.reservationModel"%>
 <%@page import="model.person"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
-    <style>
+            <style>
 
 
         .mainContainer {
             background: antiquewhite;
             width: 95%;
-            height: 50%;
+            height: 60%;
             display: flex;
             flex-direction: column;
             align-content: center;
@@ -57,7 +55,8 @@
             background: bisque
         }
         p{
-            margin-left: 6rem;
+            /*margin-left: 6rem;*/
+            font-size: 20px;
         }
         .orders{
             width: 42%;
@@ -68,19 +67,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div class = "mainContainer">
-            <h1>Order was booked successfully</h1>
-            <h3>Order is set under the name of <b><%=person.getUsername()%></b></h3>
-            <h3>reservation id : <b><%=reservationModel.getReservationID()%></b></h3>            
-            <div class="orders">
-                <h4><b>order contents :</b></h4>
-                <%for (int idx = 0; idx < reservationModel.getProductNames().size(); idx++) {%>
-                <p><%=reservationModel.getProductNames().get(idx)%></p>
-                <%}%>
-            </div>
-            <%if (person.getUserID()!=322){%>
+        <div  class="mainContainer" >
+        <h1>reservation ID was not found</h1>
+        <%if (person.getUserID()!=322){%>
             <a href="/index.jsp/userView.jsp">click here to go back to the homepage</a>
            <% } else {%><a href="/index.jsp/adminView.jsp">click here to go back to the homepage</a><%}%>
+        
         </div>
     </body>
 </html>

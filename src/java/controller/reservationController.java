@@ -38,22 +38,7 @@ public class reservationController extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.getContextPath();
-        String main = request.getParameter("main");
-        String appetizer = request.getParameter("appetizers");
-        String dessert = request.getParameter("dessert");
-        String drinks = request.getParameter("drinks");
 
-        System.out.println(main + " m " + appetizer + " a " + dessert + " des " + drinks + " dri ");
-        reservationModel rm = new reservationModel(main, appetizer, dessert, drinks);
-        DBconncection db = new DBconncection();
-        if (db.makeReservation(rm.getMainID(), rm.getAppetizerID(), rm.getDessertID(), rm.getDrinksID())) {
-            RequestDispatcher req = request.getRequestDispatcher("Extras/reservationSuccess.jsp");
-            req.forward(request, response);
-
-        } else {
-            RequestDispatcher req = request.getRequestDispatcher("Extras/reservationFailed.jsp");
-            req.forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,8 +53,32 @@ public class reservationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        RequestDispatcher req;
         try {
-            processRequest(request, response);
+            if (request.getParameter("view") != null) {
+                processRequest(request, response);
+                int reservID = Integer.parseInt(request.getParameter("resID"));
+                if (reservationModel.getReservationData(reservID)) {
+                    req = request.getRequestDispatcher("Extras/reservation.jsp");
+                    req.forward(request, response);
+                } else {
+                    req = request.getRequestDispatcher("Extras/fail.jsp");
+                    req.forward(request, response);
+                }
+            } else if (request.getParameter("delete") != null) {
+                processRequest(request, response);
+                int reservID = Integer.parseInt(request.getParameter("resID"));
+                if (reservationModel.getReservationData(reservID)) {
+                    DBconncection db = DBconncection.getInstance();
+                    db.removeReservation(reservID);
+                    req = request.getRequestDispatcher("Extras/delReservation.jsp");
+                    req.forward(request, response);
+                } else {
+                    req = request.getRequestDispatcher("Extras/fail.jsp");
+                    req.forward(request, response);
+                }
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -86,11 +95,29 @@ public class reservationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         try {
             processRequest(request, response);
+            String main = request.getParameter("main");
+            String appetizer = request.getParameter("appetizers");
+            String dessert = request.getParameter("dessert");
+            String drinks = request.getParameter("drinks");
+
+            System.out.println(main + " m " + appetizer + " a " + dessert + " des " + drinks + " dri ");
+            reservationModel rm = new reservationModel(main, appetizer, dessert, drinks);
+            DBconncection db = DBconncection.getInstance();
+            if (db.makeReservation(rm.getMainID(), rm.getAppetizerID(), rm.getDessertID(), rm.getDrinksID())) {
+                RequestDispatcher req = request.getRequestDispatcher("Extras/reservationSuccess.jsp");
+                req.forward(request, response);
+
+            } else {
+                RequestDispatcher req = request.getRequestDispatcher("Extras/reservationFailed.jsp");
+                req.forward(request, response);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(reservationController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

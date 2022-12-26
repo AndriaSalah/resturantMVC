@@ -1,22 +1,17 @@
 <%-- 
-    Document   : reservationSuccess
-    Created on : Dec 16, 2022, 9:04:36 PM
+    Document   : reservationHistory
+    Created on : Nov 22, 2022, 9:45:39 PM
     Author     : andria
 --%>
 
-<%@page import="model.reservationModel"%>
-<%@page import="model.person"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <style>
-
-
-        .mainContainer {
+            .mainContainer {
             background: antiquewhite;
             width: 95%;
-            height: 50%;
+            height: 60%;
             display: flex;
             flex-direction: column;
             align-content: center;
@@ -57,30 +52,51 @@
             background: bisque
         }
         p{
-            margin-left: 6rem;
+            /*margin-left: 6rem;*/
+            font-size: 20px;
         }
         .orders{
             width: 42%;
         }
-    </style>
+        
+.textfield{
+    text-align: center;
+    height: 1.5rem;
+    border-radius: 30px;
+    border : 1px solid black;
+    background: transparent;
+    
+}
+.textfield:focus , input:focus{
+    background-color: white;
+    border-color: white;
+    outline: none;
+    /*color: black;*/
+}
+.button{
+    margin: 1rem 1rem ;
+    transition-duration: 0.2s;
+    background:  #ffdccc;
+    color: black;
+    cursor: pointer;
+    width: 9rem;
+    height: 3rem;
+    border: none;
+    border-radius: 30px;
+}
+.button:hover{
+   background: #dc736b;
+}
+</style>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
-        <div class = "mainContainer">
-            <h1>Order was booked successfully</h1>
-            <h3>Order is set under the name of <b><%=person.getUsername()%></b></h3>
-            <h3>reservation id : <b><%=reservationModel.getReservationID()%></b></h3>            
-            <div class="orders">
-                <h4><b>order contents :</b></h4>
-                <%for (int idx = 0; idx < reservationModel.getProductNames().size(); idx++) {%>
-                <p><%=reservationModel.getProductNames().get(idx)%></p>
-                <%}%>
-            </div>
-            <%if (person.getUserID()!=322){%>
-            <a href="/index.jsp/userView.jsp">click here to go back to the homepage</a>
-           <% } else {%><a href="/index.jsp/adminView.jsp">click here to go back to the homepage</a><%}%>
-        </div>
+        <form class="mainContainer" action="reservationController" method="get">
+            <h2>please enter the reservation ID that you want to delete</h2>
+            <input class= "textfield" type="text" name="resID" >
+            <input class="button" type="submit" name="delete" value="delete">
+        </form>
     </body>
 </html>

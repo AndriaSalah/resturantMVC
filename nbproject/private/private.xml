@@ -3,24 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/andria/Desktop/SW2/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/adminController.java</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/styles/home.css</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/reservationFailed.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/delReservation.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/reservationSuccess.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/reservationDelete.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/removeProduct.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/fail.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/reservationView.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/DBconnectionDAO.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/userView.jsp</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/person.java</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/index.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/loginController.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/DBconncection.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/productModel.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/reservationController.java</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/addProduct.jsp</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/productController.java</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/registration.jsp</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/src/java/controller/registrationController.java</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/reservationModel.java</file>
             <file>file:/C:/Users/andria/Desktop/SW2/web/adminView.jsp</file>
-            <file>file:/C:/Users/andria/Desktop/SW2/web/styles/login.css</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/reservationHistory.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/web/Extras/reservation.jsp</file>
+            <file>file:/C:/Users/andria/Desktop/SW2/src/java/model/reservationModelDAO.java</file>
         </group>
     </open-files>
 </project-private>
